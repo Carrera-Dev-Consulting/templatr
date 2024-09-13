@@ -1,7 +1,7 @@
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from pydantic import BaseModel, ConfigDict, field_validator
 
-from templatr.exceptions import InvalidFormatter, MissingValue
+from templatr.exceptions import MissingValue
 from templatr.formatter import DefaultFormatter, VariableFormatter, load_formatter
 
 
