@@ -1,0 +1,29 @@
+{
+    "text": "Hello {name}, This is meant to represent what we can do with this\nEverything comes down to what you want to write {name} and be able to change.\nToday we can show required variables {age}, and the defaulted ones like {unset}\nHere are the reasons this is great:\n{reasons}\n",
+    "variables": [
+        {
+            "key": "name",
+            "path": "name",
+            "formatter": {
+                "cls": "DefaultFormatter"
+            },
+            "default": "Nameless"
+        },
+        {
+            "key": "age"
+        },
+        {
+            "key": "unset",
+            "default": "NOT SET"
+        },
+        {
+            "key": "reasons",
+            "formatter": {
+                "cls": "ListFormatter",
+                "args": [
+                    "\n"
+                ]
+            }
+        }
+    ]
+}

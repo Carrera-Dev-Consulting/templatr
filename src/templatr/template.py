@@ -1,5 +1,4 @@
-from functools import singledispatch
-from typing import IO, Any, Dict, List, Optional, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 
 from pydantic import BaseModel
 from yaml import safe_load
@@ -71,7 +70,6 @@ class Template(BaseModel):
         )
 
 
-@singledispatch
 def load_yaml_template(path: Any) -> Template:
     """*Loads yaml file as template object for you automatically.*
 
@@ -84,21 +82,15 @@ def load_yaml_template(path: Any) -> Template:
     **Returns**
     - **(Template)**: template that was parsed.
     """
-    raise UnsupportedSource(type(path))
+    if isinstance(path, str):
+        with open(path, "r") as fp:
+            return Template.from_dict(safe_load(fp))
+    try:
+        return Template.from_dict(safe_load(path))
+    except AttributeError:
+        raise UnsupportedSource(type(path))
 
 
-@load_yaml_template.register
-def _(path: str):
-    with open(path, "r") as fp:
-        return Template.from_dict(safe_load(fp))
-
-
-@load_yaml_template.register
-def _(path: IO):
-    return Template.from_dict(safe_load(path))
-
-
-@singledispatch
 def load_json_template(path: Any) -> Template:
     """*Loads json file as template for you automatically.*
 
@@ -111,15 +103,11 @@ def load_json_template(path: Any) -> Template:
     **Returns**
     - **(Template)**: template that was parsed.
     """
-    raise UnsupportedSource(type(path))
+    if isinstance(path, str):
+        with open(path, "r") as fp:
+            return Template.from_dict(safe_load(fp))
 
-
-@load_json_template.register
-def _(path: str):
-    with open(path, "r") as fp:
+    try:
         return Template.from_dict(safe_load(path))
-
-
-@load_json_template.register
-def _(path: IO):
-    return Template.from_dict(safe_load(path))
+    except AttributeError:
+        raise UnsupportedSource(type(path))
