@@ -5,8 +5,6 @@ from .formatter import VariableFormatter, load_formatter
 from .template import load_json_template, load_yaml_template, Template
 from .variable import Variable
 
-print("Adding fake things")
-
 __all__ = [
     "TemplatrException",
     "InvalidFormatter",
