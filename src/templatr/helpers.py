@@ -11,5 +11,5 @@ class DictObjectView:
     def __init__(self, wrapped: dict) -> None:
         self.__dict__ = wrapped
 
-    def __getattribute__(self, name: str) -> Any:
+    def __getattr__(self, name: str) -> Any:
         return self.__dict__.get(name)
