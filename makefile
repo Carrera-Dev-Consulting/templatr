@@ -8,5 +8,9 @@ install:
 	pip install .
 install-dev:
 	pip install -r tests/test-requirements.txt -r requirements-dev.txt .
+start-cov-server:
+	python -m http.server -d htmlcov 8080
+docs:
+	pdoc ./src
 lint:
 	black --check .

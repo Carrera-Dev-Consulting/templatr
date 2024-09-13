@@ -1,0 +1,20 @@
+text: |
+  Hello {name}, This is meant to represent what we can do with this
+  Everything comes down to what you want to write {name} and be able to change.
+  Today we can show required variables {age}, and the defaulted ones like {unset}
+  Here are the reasons this is great:
+  {reasons}
+variables:
+  - key: name
+    path: name
+    default: Nameless
+    formatter:
+      cls: DefaultFormatter
+  - key: age
+  - key: unset
+    default: NOT SET
+  - key: reasons
+    formatter:
+      cls: ListFormatter
+      args: 
+        - "\n"

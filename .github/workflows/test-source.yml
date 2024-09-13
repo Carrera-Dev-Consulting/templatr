@@ -26,7 +26,7 @@ jobs:
     - name: Run Tests
       run: | 
         make test
-  coverage:
+  coverage-3-8:
     runs-on: ubuntu-latest
     permissions: 
       issues: write
@@ -44,7 +44,8 @@ jobs:
       run: |
         make lint
     - name: Run Tests
-      run: | 
+      run: |
+        export PYTHONPATH=src
         make test
     - name: Display Coverage 
       uses: orgoro/coverage@v3.2
@@ -52,4 +53,6 @@ jobs:
         coverageFile: coverage.xml
         token: ${{ secrets.GITHUB_TOKEN }}
         sourceDir:  src
-    
+        thresholdAll: 0.9
+        thresholdNew: 0.9
+        thresholdModified: 0.9

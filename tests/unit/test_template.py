@@ -71,3 +71,19 @@ def test_template__when_given_template_with_mutliple_variables__uses_them_in_the
     result = sut.format({"name": "Billy", "age": 22})
 
     assert result == "22, Billy"
+
+
+def test_template__when_parsing_dict__parses_into_template_as_expected():
+    _input = {"text": "SIMPLE_TEMPLATE", "variables": []}
+    sut = Template.from_dict(_input)
+
+    assert sut.text == "SIMPLE_TEMPLATE"
+    assert sut.variables == []
+
+
+def test_template__when_parsing_dict_with_variable__parses_into_template_as_expected():
+    _input = {"text": "{name}", "variables": [{"key": "name"}]}
+    sut = Template.from_dict(_input)
+
+    assert sut.text == "{name}"
+    assert sut.variables == [Variable(key="name")]
