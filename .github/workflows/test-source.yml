@@ -28,9 +28,12 @@ jobs:
         make test
   coverage:
     runs-on: ubuntu-latest
+    permissions: 
+      issues: write
+      pull-requests: write
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.8
       uses: actions/setup-python@v3
       with:
         python-version: "3.8"
