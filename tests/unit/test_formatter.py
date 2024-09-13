@@ -1,4 +1,7 @@
 from typing import Any
+
+import pytest
+from templatr.exceptions import InvalidFormatter, UnknownFormatter
 from templatr.formatter import (
     DefaultFormatter,
     ListFormatter,
@@ -49,3 +52,23 @@ class CustomFormatter(VariableFormatter):
 def test_load_formatter__when_given_custom_formatter__loads_formatter():
     formatter = load_formatter("tests.unit.test_formatter.CustomFormatter", [], {})
     assert isinstance(formatter, CustomFormatter)
+
+
+def test_load_formatter__when_given_a_formatter_that_does_not_exist__raises_UnknownFormatter():
+    with pytest.raises(UnknownFormatter):
+        load_formatter("FakeFormatterLol", [], {})
+
+
+def test_load_formatter__when_missing_parameters_for_formatter__raises_InvalidFormatter():
+    with pytest.raises(InvalidFormatter):
+        load_formatter("ListFormatter", [], {})
+
+
+def test_load_formatter__when_too_many_parameters_for_formatter__raises_InvalidFormatter():
+    with pytest.raises(InvalidFormatter):
+        load_formatter("ListFormatter", [", "], {"seperator": " "})
+
+
+def test_load_formatter__when_class_loaded_is_not_formatter__raises_InvalidFormatter():
+    with pytest.raises(InvalidFormatter):
+        load_formatter("pydantic.BaseModel", [], {})
