@@ -1,5 +1,5 @@
 from functools import singledispatch
-from typing import IO, Any, List
+from typing import IO, Any, Dict, List, Optional, TypedDict
 
 from pydantic import BaseModel
 from yaml import safe_load
@@ -8,6 +8,24 @@ from templatr.exceptions import UnsupportedSource
 from templatr.helpers import DictObjectView
 
 from .variable import Variable
+
+
+class FormatterDict(TypedDict):
+    cls: str
+    args: list
+    kwargs: Dict[str, Any]
+
+
+class VariableDict(TypedDict):
+    key: str
+    path: Optional[str]
+    default: Optional[str]
+    formatter: FormatterDict
+
+
+class TemplateDict(TypedDict):
+    variables: List[VariableDict]
+    text: str
 
 
 class Template(BaseModel):
@@ -37,7 +55,7 @@ class Template(BaseModel):
         return self.text.format(**final_values)
 
     @classmethod
-    def from_dict(cls, data: dict):
+    def from_dict(cls, data: TemplateDict):
         """*Class method to be able to construct a template from a given dict that matches its structure that will parse variables into proper classes dynamically.*
 
         **Args**
@@ -48,9 +66,7 @@ class Template(BaseModel):
         """
         data = DictObjectView(data)
         return cls(
-            variables=[
-                Variable.from_variable_data(variable) for variable in data.variables
-            ],
+            variables=[Variable.from_dict(variable) for variable in data.variables],
             text=data.text,
         )
 

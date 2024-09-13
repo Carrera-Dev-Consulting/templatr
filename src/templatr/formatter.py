@@ -8,6 +8,9 @@ from templatr.exceptions import InvalidFormatter, UnknownFormatter
 class VariableFormatter(ABC):
     """*Base Class for formatters that are used to coerce the value we define in our templates into a string for interpolation.*"""
 
+    def __eq__(self, value: object) -> bool:
+        return type(value) == type(self)
+
     @abstractmethod
     def format(self, value: Any) -> Any:  # pragma: no cover
         """*Format function that will manipulate the value into whatever shape you want it to with no restriction on the return type.*
@@ -58,6 +61,9 @@ class ListFormatter(VariableFormatter):
 
     def __init__(self, seperator: str) -> None:
         self.seperator = seperator
+
+    def __eq__(self, value: object) -> bool:
+        return super().__eq__(value) and value.seperator == self.seperator
 
     def format(self, value: list):
         """*Formats the list given as value into a single string of the items as a string joined with the configured seprator.*
