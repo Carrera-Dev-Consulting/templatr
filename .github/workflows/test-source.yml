@@ -44,12 +44,9 @@ jobs:
       run: |
         make lint
     - name: Run Tests
-      run: | 
+      run: |
+        export PYTHONPATH=src
         make test
-
-    - name: print coverage
-      run: cat coverage.xml
-
     - name: Display Coverage 
       uses: orgoro/coverage@v3.2
       with:
