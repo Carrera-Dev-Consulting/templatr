@@ -6,4 +6,6 @@ install:
 	pip install .
 install-dev:
 	pip install -r tests/test-requirements.txt -r requirements-dev.txt .
+docs:
+	pdoc ./src
 

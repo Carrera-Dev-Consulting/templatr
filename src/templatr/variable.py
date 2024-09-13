@@ -3,28 +3,61 @@ from pydantic import BaseModel, ConfigDict, field_validator
 
 from templatr.exceptions import InvalidFormatter
 from templatr.formatter import DefaultFormatter, VariableFormatter, load_formatter
-from templatr.helpers import DictClass
+
 
 _UNSET = object()
 
 
 class FormatterData(BaseModel):
+    """*Internal class that we use to describe and parse out the value we need to define a formatter for a variable.*
+
+    **Args**
+    - **cls (str)**: class of formatter we are trying to load.
+    - **args (list)**: arguments for the formatter we are loading.
+    - **kwargs (dict[str, Any])**: keyword arguments for the formatter we are loading.
+    """
+
     cls: str
     args: Optional[list] = None
     kwargs: Optional[Dict[str, Any]] = None
 
     @field_validator("args", mode="before")
-    def _default_args(cls, args):
+    def _default_args(cls, args: Optional[list]):
+        """*field validator to default None args to empty list instead.*
+
+        **Args**
+        - **args (list, None)**: optional list that will be set to args.
+
+        **Returns**
+        - **(list)**: list value to set to args.
+        """
         if args is None:
             return []
+        return args
 
     @field_validator("kwargs", mode="before")
-    def _default_kwargs(cls, kwargs):
+    def _default_kwargs(cls, kwargs: Optional[Dict[str, Any]]):
+        """*field validator for kwargs to default None to empty dict.*
+
+        **Args**
+        - **kwargs (dict, None)**: possibly none kwargs we will be parsing.
+
+        **Returns**
+        - **(dict)**: dict to use as kwargs.
+        """
         if kwargs is None:
             return {}
 
+        return kwargs
+
 
 class VariableData(BaseModel):
+    """_summary_
+
+    Args:
+        BaseModel (_type_): _description_
+    """
+    
     key: str
     path: str
     default: str
