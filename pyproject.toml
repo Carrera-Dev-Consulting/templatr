@@ -37,6 +37,8 @@ classifiers = [
 keywords = ["template"]
 
 dependencies = [
+    "pydantic",
+    "pyyaml"
 ]
 
 [project.urls]
