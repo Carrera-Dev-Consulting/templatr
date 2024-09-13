@@ -47,7 +47,7 @@ jobs:
       run: | 
         make test
 
-    = name: print coverage
+    - name: print coverage
       run: cat coverage.xml
 
     - name: Display Coverage 
@@ -56,4 +56,3 @@ jobs:
         coverageFile: coverage.xml
         token: ${{ secrets.GITHUB_TOKEN }}
         sourceDir:  src
-    
