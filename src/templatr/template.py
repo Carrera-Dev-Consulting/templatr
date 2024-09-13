@@ -76,8 +76,8 @@ def load_yaml_template(path: Any) -> Template:
     **Args**
     - **path (str, IO)**: source of yaml content to format and parse into Template object
 
-    ***UnsupportedSource***
-        ValueError: Failed to parse yaml into template
+    ***Raises***
+    - **UnsupportedSource**: Failed to parse yaml into template
 
     **Returns**
     - **(Template)**: template that was parsed.
