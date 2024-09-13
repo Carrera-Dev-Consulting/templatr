@@ -18,8 +18,8 @@ class FormatterData(BaseModel):
     """
 
     cls: str
-    args: Optional[list] = None
-    kwargs: Optional[Dict[str, Any]] = None
+    args: list = []
+    kwargs: Dict[str, Any] = {}
 
     @field_validator("args", mode="before")
     def _default_args(cls, args: Optional[list]):
@@ -47,7 +47,6 @@ class FormatterData(BaseModel):
         """
         if kwargs is None:
             return {}
-
         return kwargs
 
 
@@ -62,7 +61,7 @@ class VariableData(BaseModel):
     """
 
     key: str
-    path: str
+    path: Optional[str] = None
     default: Optional[str] = None
     formatter: FormatterData = FormatterData(
         cls=DefaultFormatter.__name__,
@@ -148,7 +147,7 @@ class Variable(BaseModel):
         value_path = self.path or [self.key]
         value = _resolve_value(data, value_path)
         if value is _UNSET:
-            if self.defualt is None:
+            if self.default is None:
                 raise MissingValue(self.key, self.path)
             value = self.default
 
