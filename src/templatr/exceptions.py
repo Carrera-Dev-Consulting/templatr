@@ -48,3 +48,21 @@ class UnsupportedSource(TemplatrException):
 
     def __init__(self, _type: type) -> None:
         super().__init__(f"Unable to parse from source: {_type}")
+
+
+class MissingValue(TemplatrException):
+    """*Exception Raised when we are unable to resolve a value for a given variable and no default has been set.*
+
+    **Args**
+    - **key (str)**: The template key we are missing.
+    - **path (list[str])**: The path we looked for value in object.
+    """
+
+    def __init__(self, key: str, path: list[str]) -> None:
+        formatted_path = ".".join(path)
+        super().__init__(
+            f"Could not resolve value for variable: {key}, using path: {formatted_path}"
+        )
+
+        self.key = key
+        self.path = path
