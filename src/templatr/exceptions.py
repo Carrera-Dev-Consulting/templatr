@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 
 class TemplatrException(Exception):
@@ -58,7 +58,7 @@ class MissingValue(TemplatrException):
     - **path (list[str])**: The path we looked for value in object.
     """
 
-    def __init__(self, key: str, path: list[str]) -> None:
+    def __init__(self, key: str, path: List[str]) -> None:
         formatted_path = ".".join(path)
         super().__init__(
             f"Could not resolve value for variable: {key}, using path: {formatted_path}"

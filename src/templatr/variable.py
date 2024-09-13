@@ -106,6 +106,7 @@ class Variable(BaseModel):
     - **key (str)**: Key in the template that the variable references
     - **path (list[str], None)**: Path for variable value from incoming data, if None will default to key.
     - **default (str, None)**: Default value for variable if not able to resolve from data.
+    - **formatter (VariableFormatter)**: Formatter that will be used to change the object into something that can be put into your template. defaults to: `DefaultFormatter`
     """
 
     key: str
@@ -115,7 +116,7 @@ class Variable(BaseModel):
     model_config: ClassVar[ConfigDict] = ConfigDict(arbitrary_types_allowed=True)
 
     @field_validator("path", mode="before")
-    def _split_path(cls, value: Union[None, str, list[str]]):
+    def _split_path(cls, value: Union[None, str, List[str]]):
         """*field validator to split up the path as parts of string based on dot.*
 
         **Args**
