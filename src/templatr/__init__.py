@@ -7,7 +7,6 @@ from .variable import Variable
 
 __all__ = [
     "TemplatrException",
-    "InvalidFormatter",
     "VariableFormatter",
     "load_formatter",
     "load_json_template",
