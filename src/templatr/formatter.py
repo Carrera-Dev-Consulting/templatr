@@ -9,7 +9,7 @@ class VariableFormatter(ABC):
     """*Base Class for formatters that are used to coerce the value we define in our templates into a string for interpolation.*"""
 
     @abstractmethod
-    def format(self, value: Any) -> Any:
+    def format(self, value: Any) -> Any:  # pragma: no cover
         """*Format function that will manipulate the value into whatever shape you want it to with no restriction on the return type.*
 
         **Args**
@@ -99,8 +99,8 @@ def load_formatter(cls_name: str, args: list, kwargs: dict):
         _cls_instance: type[VariableFormatter] = getattr(
             _module_instance, _cls
         )  # will raise exception when class does not exist.
-    except:
-        raise UnknownFormatter(f"Unknown formatter class: {cls_name}")
+    except Exception as exc:
+        raise UnknownFormatter(f"Unknown formatter class: {cls_name}") from exc
 
     if not issubclass(_cls_instance, VariableFormatter):
         raise InvalidFormatter(formatter_cls=cls_name, args=args, kwargs=kwargs)

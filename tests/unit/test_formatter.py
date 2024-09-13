@@ -47,5 +47,5 @@ class CustomFormatter(VariableFormatter):
 
 
 def test_load_formatter__when_given_custom_formatter__loads_formatter():
-    formatter = load_formatter("unit.test_variable.CustomFormatter", [], {})
+    formatter = load_formatter("tests.unit.test_formatter.CustomFormatter", [], {})
     assert isinstance(formatter, CustomFormatter)
