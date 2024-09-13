@@ -12,3 +12,5 @@ start-cov-server:
 	python -m http.server -d htmlcov 8080
 docs:
 	pdoc ./src
+lint:
+	black --check .
