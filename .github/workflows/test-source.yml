@@ -46,6 +46,10 @@ jobs:
     - name: Run Tests
       run: | 
         make test
+
+    = name: print coverage
+      run: cat coverage.xml
+
     - name: Display Coverage 
       uses: orgoro/coverage@v3.2
       with:
