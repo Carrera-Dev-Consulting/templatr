@@ -1,5 +1,5 @@
 from functools import singledispatch
-from typing import IO, Any
+from typing import IO, Any, List
 
 from pydantic import BaseModel
 from yaml import safe_load
@@ -10,7 +10,7 @@ from .variable import Variable
 
 
 class Template(BaseModel):
-    variables: list[Variable]
+    variables: List[Variable]
     text: str
 
     def format(self, data: Any):
@@ -18,7 +18,7 @@ class Template(BaseModel):
             variable.key: variable.resolve(data) for variable in self.variables
         }
 
-        return self.text.format(final_values)
+        return self.text.format(**final_values)
 
     @classmethod
     def from_dict(cls, data: dict):

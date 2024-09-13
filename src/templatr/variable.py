@@ -1,8 +1,8 @@
-from typing import Any, Optional
-from pydantic import BaseModel, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, field_validator
 
 from templatr.exceptions import InvalidFormatter
-from templatr.formatter import VariableFormatter, load_formatter
+from templatr.formatter import DefaultFormatter, VariableFormatter, load_formatter
 from templatr.helpers import DictClass
 
 _UNSET = object()
@@ -11,7 +11,7 @@ _UNSET = object()
 class FormatterData(BaseModel):
     cls: str
     args: Optional[list] = None
-    kwargs: Optional[dict[str, Any]] = None
+    kwargs: Optional[Dict[str, Any]] = None
 
     @field_validator("args", mode="before")
     def _default_args(cls, args):
@@ -28,10 +28,14 @@ class VariableData(BaseModel):
     key: str
     path: str
     default: str
-    formatter: FormatterData
+    formatter: FormatterData = FormatterData(
+        cls=DefaultFormatter.__name__,
+        args=[],
+        kwargs={},
+    )
 
 
-def _resolve_value(data: Any, path: list[str]):
+def _resolve_value(data: Any, path: List[str]):
     current_value = data
     for section in path:
         if isinstance(current_value, dict):
@@ -51,9 +55,10 @@ def _resolve_value(data: Any, path: list[str]):
 
 class Variable(BaseModel):
     key: str
-    path: Optional[list[str]] = None
+    path: Optional[List[str]] = None
     default: Optional[Any] = None
-    formatter: VariableFormatter
+    formatter: VariableFormatter = DefaultFormatter()
+    model_config: ClassVar[ConfigDict] = ConfigDict(arbitrary_types_allowed=True)
 
     @field_validator("path", mode="before")
     def _split_path(cls, value):
