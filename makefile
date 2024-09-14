@@ -10,7 +10,11 @@ install-dev:
 	pip install -r tests/test-requirements.txt -r requirements-dev.txt .
 start-cov-server:
 	python -m http.server -d htmlcov 8080
-docs:
+dev-docs:
 	pdoc ./src
+public-docs:
+	cd docs && hugo serve
+build-docs:
+	echo "Building docs"
 lint:
 	black --check .

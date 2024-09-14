@@ -161,3 +161,17 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 .vscode/
+
+# Generated files by hugo
+docs/public/
+docs/resources/_gen/
+docs/assets/jsconfig.json
+docs/hugo_stats.json
+
+# Executable may be added to repository
+hugo.exe
+hugo.darwin
+hugo.linux
+
+# Temporary lock file while building
+docs/.hugo_build.lock
