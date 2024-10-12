@@ -1,0 +1,61 @@
+baseURL = '/'
+theme = "docura"
+enableGitInfo = true
+defaultContentLanguage = "en"
+
+[languages.en]
+weight = 1
+languageName = "English"
+languageCode = "en-US"
+contentDir = "content/en"
+title = "Templatr"
+
+  [languages.en.params]
+  description = "Documentation for Templatr Library"
+
+[markup.highlight]
+noClasses = false
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[params.author]
+name = "Andres Carrera"
+url = "https://blog.gxldcptrick.dev"
+
+[params.themeColors]
+light = "#ffffff"
+dark = "#121212"
+
+[params.years]
+start = ""
+present = 2_024
+
+[params.social]
+github = "https://github.com/carrera-dev-consulting"
+
+[params.ads]
+googleAdSense = ""
+
+[params.algolia.en]
+container = "#site-header-search"
+appId = ""
+indexName = ""
+apiKey = ""
+
+[params.home]
+repository = "carrera-dev-consulting/templatr"
+
+[[menu.main]]
+url = "/"
+name = "Home"
+identifier = "home"
+pre = "<i class='icon icon-home'></i>"
+weight = 1
+
+[[menu.main]]
+url = "/docs"
+name = "Documentation"
+identifier = "docs"
+pre = "<i class='icon icon-book'></i>"
+weight = 2
